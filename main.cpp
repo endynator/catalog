@@ -55,10 +55,13 @@ void editSong(vector<Song>& catalog) {
     string songName;
     getline(cin, songName);
 
+
     for (auto& song : catalog) {
+        
         if (song.name == songName) {
             cout << "Enter the new name of the song (or press Enter to keep it the same): ";
             string newName;
+            
             getline(cin, newName);
             if (!newName.empty()) {
                 song.name = newName;
@@ -158,6 +161,8 @@ int main() {
     }
 
     while (true) {
+        int choice;
+
         cout << "\nSong's Lyrics Catalog Menu:\n";
         cout << "1. Add Song\n";
         cout << "2. Remove Song\n";
@@ -166,10 +171,8 @@ int main() {
         cout << "5. Save Catalog\n";
         cout << "6. Exit\n";
         cout << "Enter your choice: ";
-
-        int choice;
-        cin >> choice;
-        cin.ignore(); 
+        
+        cin >> choice; cin.ignore();
 
         switch (choice) {
         case 1:
@@ -191,6 +194,9 @@ int main() {
             return 0;
         default:
             cout << "Invalid choice. Please try again.\n";
+            cin.clear();
+            cin.ignore();
+            break;
         }
     }
 
