@@ -128,6 +128,61 @@ void saveCatalog(const vector<Song>& catalog) {
     }
 }
 
+void searchSongs(const vector<Song>& catalog) {
+    int searchChoice;
+    cout << "Choose the search parameter:\n";
+    cout << "1. Name\n";
+    cout << "2. Artist\n";
+    cout << "3. Year of Release\n";
+    cout << "4. Lyrics\n";
+    cout << "Enter your choice: ";
+    cin >> searchChoice;
+    cin.ignore();
+
+    string searchValue;
+    cout << "Enter the search value: ";
+    getline(cin, searchValue);
+
+    bool found = false;
+
+    for (const Song& song : catalog) {
+        bool match = false;
+
+        switch (searchChoice) {
+        case 1:
+            match = (song.name.find(searchValue) != string::npos);
+            break;
+        case 2:
+            match = (song.artist.find(searchValue) != string::npos);
+            break;
+        case 3:
+            match = (to_string(song.year) == searchValue);
+            break;
+        case 4:
+            match = (song.lyrics.find(searchValue) != string::npos);
+            break;
+        default:
+            cout << "Invalid search parameter choice.\n";
+            return;
+        }
+
+        if (match) {
+            cout << "Song found:\n";
+            cout << "Name: " << song.name << endl;
+            cout << "Artist: " << song.artist << endl;
+            cout << "Year of Release: " << song.year << endl;
+            cout << "Lyrics:\n" << song.lyrics << endl;
+            cout << "-------------------------------------\n";
+            found = true;
+        }
+    }
+
+    if (!found) {
+        cout << "No matching songs found.\n";
+    }
+}
+
+
 int main() {
     vector<Song> catalog;
 
@@ -167,9 +222,10 @@ int main() {
         cout << "1. Add Song\n";
         cout << "2. Remove Song\n";
         cout << "3. Edit Song\n";
-        cout << "4. Display Catalog\n";
-        cout << "5. Save Catalog\n";
-        cout << "6. Exit\n";
+        cout << "4. Find Song\n";
+        cout << "5. Display Catalog\n";
+        cout << "6. Save Catalog\n";
+        cout << "7. Exit\n";
         cout << "Enter your choice: ";
         
         cin >> choice; cin.ignore();
@@ -185,12 +241,15 @@ int main() {
             editSong(catalog);
             break;
         case 4:
-            displayCatalog(catalog);
+            searchSongs(catalog);
             break;
         case 5:
-            saveCatalog(catalog);
+            displayCatalog(catalog);
             break;
         case 6:
+            saveCatalog(catalog);
+            break;
+        case 7:
             return 0;
         default:
             cout << "Invalid choice. Please try again.\n";
